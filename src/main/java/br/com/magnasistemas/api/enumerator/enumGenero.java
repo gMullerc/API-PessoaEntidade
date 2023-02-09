@@ -8,4 +8,8 @@ public enum enumGenero {
     enumGenero(String g) {
         this.genero = g;
     }
+    
+	public String getGenero() {
+		return genero;
+	}
 }

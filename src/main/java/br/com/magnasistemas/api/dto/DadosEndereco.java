@@ -1,4 +1,4 @@
-package br.com.magnasistemas.api.endereco;
+package br.com.magnasistemas.api.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
