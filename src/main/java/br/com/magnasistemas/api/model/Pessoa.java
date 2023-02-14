@@ -2,10 +2,10 @@ package br.com.magnasistemas.api.model;
 
 import java.time.LocalDate;
 
-import br.com.magnasistemas.api.dto.DadosAtualizacaoPessoa;
-import br.com.magnasistemas.api.dto.DadosCadastroPessoa;
 import br.com.magnasistemas.api.enumerator.enumEtnia;
 import br.com.magnasistemas.api.enumerator.enumGenero;
+import br.com.magnasistemas.api.records.pessoa.DadosAtualizacaoPessoa;
+import br.com.magnasistemas.api.records.pessoa.DadosCadastroPessoa;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -43,7 +43,6 @@ public class Pessoa {
 	@OneToOne(cascade = { CascadeType.PERSIST })
 	@JoinColumn(name = "contato_id")
 	protected Contato contato;
-	protected Boolean ativo;
 
 	public Pessoa(DadosCadastroPessoa dados) {
 		this.nome = dados.nome();
@@ -52,7 +51,6 @@ public class Pessoa {
 		this.dataDeNascimento = dados.dataDeNascimento();
 		this.endereco = new Endereco(dados.endereco());
 		this.contato = new Contato(dados.contato());
-		this.ativo = true;
 	}
 
 	public void atualizarInformacoes(DadosAtualizacaoPessoa dados) {
@@ -69,7 +67,4 @@ public class Pessoa {
 
 	}
 
-	public void inativar() {
-		this.ativo = false;
-	}
 }

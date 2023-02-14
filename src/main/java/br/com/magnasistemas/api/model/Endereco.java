@@ -1,6 +1,6 @@
 package br.com.magnasistemas.api.model;
 
-import br.com.magnasistemas.api.dto.DadosEndereco;
+import br.com.magnasistemas.api.records.endereco.DadosEndereco;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

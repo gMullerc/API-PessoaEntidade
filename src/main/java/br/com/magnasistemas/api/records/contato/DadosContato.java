@@ -1,4 +1,4 @@
-package br.com.magnasistemas.api.dto;
+package br.com.magnasistemas.api.records.contato;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;

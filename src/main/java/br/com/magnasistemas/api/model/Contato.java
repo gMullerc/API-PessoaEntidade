@@ -1,6 +1,6 @@
 package br.com.magnasistemas.api.model;
 
-import br.com.magnasistemas.api.dto.DadosContato;
+import br.com.magnasistemas.api.records.contato.DadosContato;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

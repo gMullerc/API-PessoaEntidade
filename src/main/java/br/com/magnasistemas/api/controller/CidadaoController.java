@@ -15,9 +15,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.magnasistemas.api.dto.DadosAtualizaCidadao;
-import br.com.magnasistemas.api.dto.DadosCadastroCidadao;
 import br.com.magnasistemas.api.model.Cidadao;
+import br.com.magnasistemas.api.records.cidadao.DadosAtualizacaoCidadao;
+import br.com.magnasistemas.api.records.cidadao.DadosCadastroCidadao;
+import br.com.magnasistemas.api.records.cidadao.DadosListagemCidadao;
 import br.com.magnasistemas.api.repository.CidadaoRepository;
 import jakarta.validation.Valid;
 
@@ -30,35 +31,42 @@ public class CidadaoController {
 
 	@PostMapping
 	@Transactional
-	public Cidadao Cadastrar(@RequestBody @Valid DadosCadastroCidadao dados) {
-		return repository.save(new Cidadao(dados));
+	public ResponseEntity<Cidadao> Cadastrar(@RequestBody @Valid DadosCadastroCidadao dados) {
+		var cid = repository.save(new Cidadao(dados));
+		return ResponseEntity.ok(cid);
 	}
 
 	@GetMapping
-	public ResponseEntity<List<Cidadao>> Procurar() {
-		List<Cidadao> get = repository.findAll();
+	public ResponseEntity<List<DadosListagemCidadao>> Procurar() {
+		var get = repository.findAll().stream().map(DadosListagemCidadao::new).toList();
 		return ResponseEntity.ok(get);
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Optional<Cidadao>> ProcurarPorId(@PathVariable Long id) {
+	public ResponseEntity<List<DadosListagemCidadao>> ProcurarPorId(@PathVariable Long id) {
 		
-		Optional<Cidadao> get = repository.findById(id);
+		var get = repository.findById(id).stream().map(DadosListagemCidadao::new).toList();
+
 		return ResponseEntity.ok(get);
 	}
 
 	@PutMapping
 	@Transactional
-	public void atualiza(@RequestBody @Valid DadosAtualizaCidadao dados) {
-		Cidadao cidadao = repository.getReferenceById(dados.id());
+	public ResponseEntity<Cidadao> atualiza(@RequestBody @Valid DadosAtualizacaoCidadao dados) {
+		var cidadao = repository.getReferenceById(dados.id());
 		cidadao.atualizarDadosCidadao(dados);
+		return ResponseEntity.ok(cidadao);
 
 	}
 
 	@DeleteMapping("/{id}")
 	@Transactional
-	public void deletar(@PathVariable Long id) {
+	public ResponseEntity<String> deletar(@PathVariable Long id) {
 		repository.deleteById(id);
+		return ResponseEntity.ok("""
+				O cidadao de ID: %d
+				Foi deletado com sucesso.
+				""".formatted(id));
 	}
 
 }
