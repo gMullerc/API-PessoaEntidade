@@ -50,8 +50,11 @@ public class ProfissionalController {
 	}
 	
 	@PutMapping
+	@Transactional
 	public ResponseEntity<Profissional> Atualizar(@RequestBody @Valid DadosAtualizacaoProfissional dados){
-		return null;
+		var profissional = repository.getReferenceById(dados.id());
+		profissional.atualizarDadosProfissionais(dados);
+		return ResponseEntity.ok(profissional);
 		
 	}
 	

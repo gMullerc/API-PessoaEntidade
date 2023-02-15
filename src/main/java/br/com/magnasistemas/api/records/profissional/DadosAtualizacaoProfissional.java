@@ -7,6 +7,6 @@ import br.com.magnasistemas.api.model.DocumentosProfissionais;
 import br.com.magnasistemas.api.records.cidadao.DadosAtualizacaoCidadao;
 
 public record DadosAtualizacaoProfissional(Long id, DadosAtualizacaoCidadao cidadao, String cargo,
-		enumTipoDeProfissional escolaridade, BigDecimal remuneracao, DocumentosProfissionais documentosProfissionais) {
+		enumTipoDeProfissional tipoDeProfissional, BigDecimal remuneracao) {
 
 }

@@ -55,15 +55,9 @@ public class Pessoa {
 
 	public void atualizarInformacoes(DadosAtualizacaoPessoa dados) {
 
-		if (dados.nome() != null) {
 			this.nome = dados.nome();
-		}
-		if (dados.endereco() != null) {
 			endereco.atualizaInformacoesEndereco(dados.endereco());
-		}
-		if (dados.contato() != null) {
 			contato.atualizaInformacoesContato(dados.contato());
-		}
 
 	}
 

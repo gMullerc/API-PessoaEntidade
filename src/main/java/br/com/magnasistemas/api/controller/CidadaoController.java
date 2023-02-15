@@ -1,9 +1,9 @@
 package br.com.magnasistemas.api.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,7 +19,7 @@ import br.com.magnasistemas.api.model.Cidadao;
 import br.com.magnasistemas.api.records.cidadao.DadosAtualizacaoCidadao;
 import br.com.magnasistemas.api.records.cidadao.DadosCadastroCidadao;
 import br.com.magnasistemas.api.records.cidadao.DadosListagemCidadao;
-import br.com.magnasistemas.api.repository.CidadaoRepository;
+import br.com.magnasistemas.api.service.CidadaoService;
 import jakarta.validation.Valid;
 
 @RestController
@@ -27,46 +27,37 @@ import jakarta.validation.Valid;
 public class CidadaoController {
 
 	@Autowired
-	private CidadaoRepository repository;
+	private CidadaoService service;
 
 	@PostMapping
 	@Transactional
-	public ResponseEntity<Cidadao> Cadastrar(@RequestBody @Valid DadosCadastroCidadao dados) {
-		var cid = repository.save(new Cidadao(dados));
-		return ResponseEntity.ok(cid);
+	public ResponseEntity<Cidadao> cadastrar(@RequestBody @Valid DadosCadastroCidadao dados) {
+		service.criarCidadao(dados);
+		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
 
 	@GetMapping
-	public ResponseEntity<List<DadosListagemCidadao>> Procurar() {
-		var get = repository.findAll().stream().map(DadosListagemCidadao::new).toList();
-		return ResponseEntity.ok(get);
+	public ResponseEntity<List<DadosListagemCidadao>> procurar() {
+		return ResponseEntity.status(HttpStatus.OK).body(service.listarCidadao());
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<List<DadosListagemCidadao>> ProcurarPorId(@PathVariable Long id) {
-		
-		var get = repository.findById(id).stream().map(DadosListagemCidadao::new).toList();
-
-		return ResponseEntity.ok(get);
+	public ResponseEntity<List<DadosListagemCidadao>> procurarPorId(@PathVariable Long id) {
+		return ResponseEntity.status(HttpStatus.OK).body(service.listarPorID(id));
 	}
 
 	@PutMapping
 	@Transactional
-	public ResponseEntity<Cidadao> atualiza(@RequestBody @Valid DadosAtualizacaoCidadao dados) {
-		var cidadao = repository.getReferenceById(dados.id());
-		cidadao.atualizarDadosCidadao(dados);
-		return ResponseEntity.ok(cidadao);
-
+	public ResponseEntity<Cidadao> atualizar(@RequestBody @Valid DadosAtualizacaoCidadao dados) {
+		service.atualizarCidadao(dados);
+		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
 
 	@DeleteMapping("/{id}")
 	@Transactional
 	public ResponseEntity<String> deletar(@PathVariable Long id) {
-		repository.deleteById(id);
-		return ResponseEntity.ok("""
-				O cidadao de ID: %d
-				Foi deletado com sucesso.
-				""".formatted(id));
+
+		return ResponseEntity.status(HttpStatus.NO_CONTENT).body(service.deletarCidadao(id));
 	}
 
 }
