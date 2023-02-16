@@ -3,6 +3,7 @@ package br.com.magnasistemas.api.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,47 +17,39 @@ import br.com.magnasistemas.api.model.Profissional;
 import br.com.magnasistemas.api.records.profissional.DadosAtualizacaoProfissional;
 import br.com.magnasistemas.api.records.profissional.DadosCadastroProfissional;
 import br.com.magnasistemas.api.records.profissional.DadosListagemProfissional;
-import br.com.magnasistemas.api.repository.ProfissionalRepository;
+import br.com.magnasistemas.api.service.ProfissionalService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("profissional")
 public class ProfissionalController {
+	
 	@Autowired
-	private ProfissionalRepository repository;
+	private ProfissionalService service;
 
 	@PostMapping
 	@Transactional
-	public ResponseEntity<Profissional> Cadastrar(@RequestBody @Valid DadosCadastroProfissional dados) {
-		var cid = repository.save(new Profissional(dados));
-		return ResponseEntity.ok(cid);
+	public ResponseEntity<Profissional> criarProfissional(@RequestBody DadosCadastroProfissional profissional) {
+		service.criaProfissional(profissional);
+		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
 
 	@GetMapping
-	public ResponseEntity<List<DadosListagemProfissional>> Procurar() {
-
-		var get = repository.findAll().stream().map(DadosListagemProfissional::new).toList();
-		return ResponseEntity.ok(get);
-
+	public ResponseEntity<List<DadosListagemProfissional>> procurar() {
+		return ResponseEntity.status(HttpStatus.OK).body(service.listarProfissional());
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<List<DadosListagemProfissional>> ProcurarPorId(@PathVariable Long id) {
-
-		var get = repository.findById(id).stream().map(DadosListagemProfissional::new).toList();
-		return ResponseEntity.ok(get);
-
+	public ResponseEntity<Profissional> procurarPorId(@PathVariable Long id) {
+		return ResponseEntity.status(HttpStatus.OK).body(service.listarPorID(id));
 	}
-	
+
 	@PutMapping
 	@Transactional
-	public ResponseEntity<Profissional> Atualizar(@RequestBody @Valid DadosAtualizacaoProfissional dados){
-		var profissional = repository.getReferenceById(dados.id());
-		profissional.atualizarDadosProfissionais(dados);
-		return ResponseEntity.ok(profissional);
-		
+	public ResponseEntity<Profissional> atualizar(@RequestBody @Valid DadosAtualizacaoProfissional dados) {
+		service.atualizarProfissional(dados);
+		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
-	
 
 }

@@ -2,12 +2,7 @@ package br.com.magnasistemas.api.model;
 
 import java.math.BigDecimal;
 
-import br.com.magnasistemas.api.enumerator.enumEscolaridade;
-import br.com.magnasistemas.api.enumerator.enumSituacaoEscolar;
 import br.com.magnasistemas.api.enumerator.enumTipoDeProfissional;
-import br.com.magnasistemas.api.records.cidadao.DadosAtualizacaoCidadao;
-import br.com.magnasistemas.api.records.cidadao.DadosCadastroCidadao;
-import br.com.magnasistemas.api.records.pessoa.DadosAtualizacaoPessoa;
 import br.com.magnasistemas.api.records.profissional.DadosAtualizacaoProfissional;
 import br.com.magnasistemas.api.records.profissional.DadosCadastroProfissional;
 import jakarta.persistence.CascadeType;
@@ -20,7 +15,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -49,15 +43,14 @@ public class Profissional extends Cidadao {
 		this.documentosProfissionais = new DocumentosProfissionais(dados.documentosProfissionais());
 
 	}
-	
+
 	public void atualizarDadosProfissionais(DadosAtualizacaoProfissional dados) {
-		
+
 		atualizarDadosCidadao(dados.cidadao());
 		this.cargo = dados.cargo();
 		this.tipoDeProfissional = dados.tipoDeProfissional();
 		this.remuneracao = dados.remuneracao();
-	
-		
+
 	}
 
 }

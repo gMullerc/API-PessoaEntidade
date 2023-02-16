@@ -54,10 +54,9 @@ public class Pessoa {
 	}
 
 	public void atualizarInformacoes(DadosAtualizacaoPessoa dados) {
-
-			this.nome = dados.nome();
-			endereco.atualizaInformacoesEndereco(dados.endereco());
-			contato.atualizaInformacoesContato(dados.contato());
+		this.nome = dados.nome();
+		endereco.atualizaInformacoesEndereco(dados.endereco());
+		contato.atualizaInformacoesContato(dados.contato());
 
 	}
 

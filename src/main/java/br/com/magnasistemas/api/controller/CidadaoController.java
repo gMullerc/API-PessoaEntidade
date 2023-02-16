@@ -1,6 +1,7 @@
 package br.com.magnasistemas.api.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -42,7 +43,7 @@ public class CidadaoController {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<List<DadosListagemCidadao>> procurarPorId(@PathVariable Long id) {
+	public ResponseEntity<Cidadao> procurarPorId(@PathVariable Long id) {
 		return ResponseEntity.status(HttpStatus.OK).body(service.listarPorID(id));
 	}
 
@@ -50,14 +51,15 @@ public class CidadaoController {
 	@Transactional
 	public ResponseEntity<Cidadao> atualizar(@RequestBody @Valid DadosAtualizacaoCidadao dados) {
 		service.atualizarCidadao(dados);
+		
 		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
 
 	@DeleteMapping("/{id}")
 	@Transactional
 	public ResponseEntity<String> deletar(@PathVariable Long id) {
-
-		return ResponseEntity.status(HttpStatus.NO_CONTENT).body(service.deletarCidadao(id));
+		Cidadao cid = service.verificaExistencia(id);
+		return ResponseEntity.status(HttpStatus.NO_CONTENT).body(service.deletarCidadao(cid.getId()));
 	}
 
 }
