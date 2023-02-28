@@ -26,12 +26,12 @@ public class Documento {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	@Column(unique=true)
+	private Long documentos_id;
+	@Column(unique = true)
 	private String certidaDeNascimento;
-	@Column(unique=true)
+	@Column(unique = true)
 	private String rg;
-	@Column(unique=true)
+	@Column(unique = true)
 	private String cpf;
 
 }

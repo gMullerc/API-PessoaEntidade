@@ -30,7 +30,7 @@ public class Profissional extends Cidadao {
 	protected String cargo;
 	@Enumerated(EnumType.STRING)
 	protected enumTipoDeProfissional tipoDeProfissional;
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = { CascadeType.ALL })
 	@JoinColumn(name = "documentos_profissionais_id")
 	protected DocumentosProfissionais documentosProfissionais;
 	protected BigDecimal remuneracao;

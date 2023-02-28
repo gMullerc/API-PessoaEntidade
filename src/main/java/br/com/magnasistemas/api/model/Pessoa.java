@@ -38,10 +38,10 @@ public class Pessoa {
 	@Enumerated(EnumType.STRING)
 	protected enumGenero genero;
 	@OneToOne(cascade = { CascadeType.PERSIST })
-	@JoinColumn(name = "endereco_id")
+	@JoinColumn(name = "enderecos_id")
 	protected Endereco endereco;
 	@OneToOne(cascade = { CascadeType.PERSIST })
-	@JoinColumn(name = "contato_id")
+	@JoinColumn(name = "contatos_id")
 	protected Contato contato;
 
 	public Pessoa(DadosCadastroPessoa dados) {

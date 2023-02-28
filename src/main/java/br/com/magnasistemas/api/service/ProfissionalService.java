@@ -46,11 +46,11 @@ public class ProfissionalService {
 		return profissional;
 	}
 
-	public String deletarCidadao(Long id) {
+	public String deletarProfissional(Long id) {
 
 		repository.deleteById(id);
 		return """
-				O cidadao de ID: %d
+				O profissional de ID: %d
 				Foi deletado com sucesso.
 				""".formatted(id);
 	}

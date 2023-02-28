@@ -9,7 +9,6 @@ import jakarta.validation.constraints.NotNull;
 
 public record DadosCadastroCidadao(
 		
-		//this.dataDeNascimento = dados.pessoa().dataDeNascimento();
 		
 		@NotNull DadosCadastroPessoa pessoa, 
 		@NotNull enumSituacaoEscolar situacaoEscolar,

@@ -19,7 +19,7 @@ public class Contato {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private Long contatos_id;
 	private String celular;
 	private String telefone;
 	private String email;
