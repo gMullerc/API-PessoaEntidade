@@ -1,6 +1,7 @@
 package br.com.magnasistemas.api.records.profissional;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import br.com.magnasistemas.api.enumerator.enumEscolaridade;
 import br.com.magnasistemas.api.enumerator.enumGenero;
@@ -12,9 +13,9 @@ import br.com.magnasistemas.api.model.DocumentosProfissionais;
 import br.com.magnasistemas.api.model.Endereco;
 import br.com.magnasistemas.api.model.Profissional;
 
-public record DadosListagemProfissional(Long id, String nome, enumGenero genero, Endereco endereco, Contato contato,
-		enumSituacaoEscolar situacaoEscolar, enumEscolaridade Escolaridade, Documento documentos, String cargo,
-		enumTipoDeProfissional TipoDeprofissional, BigDecimal remuneracao,
+public record DadosListagemProfissional(Long id, String nome, enumGenero genero, List<Endereco> endereco,
+		Contato contato, enumSituacaoEscolar situacaoEscolar, enumEscolaridade Escolaridade, Documento documentos,
+		String cargo, enumTipoDeProfissional TipoDeprofissional, BigDecimal remuneracao,
 		DocumentosProfissionais documentosProfissionais) {
 
 	public DadosListagemProfissional(Profissional cid) {

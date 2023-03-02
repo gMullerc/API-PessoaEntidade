@@ -1,10 +1,14 @@
 package br.com.magnasistemas.api.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import br.com.magnasistemas.api.records.endereco.DadosEndereco;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,6 +31,10 @@ public class Endereco {
 	private String complemento;
 	private String cidade;
 	private String uf;
+	@ManyToOne
+	@JoinColumn(name = "pessoa_id", insertable = false, updatable = false)
+	@JsonIgnore
+	private Pessoa pessoa_id;
 
 	public Endereco(DadosEndereco endereco) {
 		this.logradouro = endereco.logradouro();

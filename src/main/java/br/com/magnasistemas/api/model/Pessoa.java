@@ -1,9 +1,14 @@
 package br.com.magnasistemas.api.model;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import br.com.magnasistemas.api.enumerator.enumEtnia;
 import br.com.magnasistemas.api.enumerator.enumGenero;
+import br.com.magnasistemas.api.records.endereco.DadosEndereco;
 import br.com.magnasistemas.api.records.pessoa.DadosAtualizacaoPessoa;
 import br.com.magnasistemas.api.records.pessoa.DadosCadastroPessoa;
 import jakarta.persistence.CascadeType;
@@ -16,6 +21,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.EqualsAndHashCode;
@@ -37,10 +43,13 @@ public class Pessoa {
 	protected enumEtnia etnia;
 	@Enumerated(EnumType.STRING)
 	protected enumGenero genero;
-	@OneToOne(cascade = { CascadeType.PERSIST })
-	@JoinColumn(name = "enderecos_id")
-	protected Endereco endereco;
-	@OneToOne(cascade = { CascadeType.PERSIST })
+	
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "pessoa_id")
+	@JsonIgnore
+	protected List<Endereco> endereco = new ArrayList<>();
+	
+	@OneToOne(cascade = { CascadeType.ALL })
 	@JoinColumn(name = "contatos_id")
 	protected Contato contato;
 
@@ -49,13 +58,17 @@ public class Pessoa {
 		this.genero = dados.genero();
 		this.etnia = dados.etnia();
 		this.dataDeNascimento = dados.dataDeNascimento();
-		this.endereco = new Endereco(dados.endereco());
+		for (DadosEndereco endereco : dados.endereco()) {
+			this.endereco.add(new Endereco(endereco));
+		}
 		this.contato = new Contato(dados.contato());
 	}
 
 	public void atualizarInformacoes(DadosAtualizacaoPessoa dados) {
 		this.nome = dados.nome();
-		endereco.atualizaInformacoesEndereco(dados.endereco());
+		for (DadosEndereco endereco : dados.endereco()) {
+			this.endereco.add(new Endereco(endereco));
+		}
 		contato.atualizaInformacoesContato(dados.contato());
 
 	}

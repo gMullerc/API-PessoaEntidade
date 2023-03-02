@@ -1,6 +1,7 @@
 package br.com.magnasistemas.api.records.pessoa;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import br.com.magnasistemas.api.enumerator.enumEtnia;
 import br.com.magnasistemas.api.enumerator.enumGenero;
@@ -16,6 +17,6 @@ public record DadosCadastroPessoa(
 		@NotNull enumGenero genero, 
 		@NotNull enumEtnia etnia,
 		@NotNull LocalDate dataDeNascimento, 
-		@NotNull @Valid DadosEndereco endereco,
+		@NotNull @Valid List<DadosEndereco> endereco,
 		@NotNull @Valid DadosContato contato) {
 }
