@@ -8,8 +8,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import br.com.magnasistemas.api.enumerator.enumEtnia;
 import br.com.magnasistemas.api.enumerator.enumGenero;
+import br.com.magnasistemas.api.records.contato.DadosContato;
 import br.com.magnasistemas.api.records.endereco.DadosEndereco;
-import br.com.magnasistemas.api.records.pessoa.DadosAtualizacaoPessoa;
 import br.com.magnasistemas.api.records.pessoa.DadosCadastroPessoa;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -22,16 +22,17 @@ import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Table(name = "pessoas")
 @Entity(name = "Pessoa")
 @Inheritance(strategy = InheritanceType.JOINED)
 @Getter
+@Setter
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
 public class Pessoa {
@@ -43,15 +44,16 @@ public class Pessoa {
 	protected enumEtnia etnia;
 	@Enumerated(EnumType.STRING)
 	protected enumGenero genero;
-	
+
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "pessoa_id")
 	@JsonIgnore
 	protected List<Endereco> endereco = new ArrayList<>();
-	
-	@OneToOne(cascade = { CascadeType.ALL })
-	@JoinColumn(name = "contatos_id")
-	protected Contato contato;
+
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "pessoa_id")
+	@JsonIgnore
+	protected List<Contato> contato = new ArrayList<>();
 
 	public Pessoa(DadosCadastroPessoa dados) {
 		this.nome = dados.nome();
@@ -61,16 +63,9 @@ public class Pessoa {
 		for (DadosEndereco endereco : dados.endereco()) {
 			this.endereco.add(new Endereco(endereco));
 		}
-		this.contato = new Contato(dados.contato());
-	}
-
-	public void atualizarInformacoes(DadosAtualizacaoPessoa dados) {
-		this.nome = dados.nome();
-		for (DadosEndereco endereco : dados.endereco()) {
-			this.endereco.add(new Endereco(endereco));
+		for (DadosContato contato : dados.contato()) {
+			this.contato.add(new Contato(contato));
 		}
-		contato.atualizaInformacoesContato(dados.contato());
-
 	}
 
 }

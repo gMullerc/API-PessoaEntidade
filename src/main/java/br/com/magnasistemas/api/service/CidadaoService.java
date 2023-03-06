@@ -17,11 +17,16 @@ import br.com.magnasistemas.api.repository.CidadaoRepository;
 @Service
 public class CidadaoService {
 
-
 	@Autowired
 	private CidadaoRepository repository;
 
+	@Autowired
+	private EnderecoService enderecos;
+	@Autowired
+	private ContatoService contatos;
+
 	public Cidadao criarCidadao(DadosCadastroCidadao cid) {
+
 		return repository.save(new Cidadao(cid));
 	}
 
@@ -32,32 +37,36 @@ public class CidadaoService {
 		return get;
 	}
 
-	public Cidadao listarPorID(Long id) {
-		Optional<Cidadao> get = repository.findById(id);
+	public DadosListagemCidadao listarPorID(Long id) {
+		Optional<DadosListagemCidadao> get = repository.findById(id).map(DadosListagemCidadao::new);
+		
 		return get.orElseThrow(BadRequestExceptionHandler::new);
+		
+		
 	}
 
 	public Cidadao atualizarCidadao(DadosAtualizacaoCidadao dados) {
 		Optional<Cidadao> cid = repository.findById(dados.id());
 		if (cid.isEmpty())
 			throw new BadRequestExceptionHandler();
-		Cidadao cidadao = repository.getReferenceById(dados.id());	
-		cidadao.atualizarDadosCidadao(dados);
-		return cidadao;
+
+		Cidadao cidadao = cid.get();
+		cidadao.setNome(dados.pessoa().nome());
+		cidadao.setEndereco(enderecos.atualizarEndereco(dados.pessoa(), cidadao));
+		cidadao.setContato(contatos.atualizarContato(dados.pessoa(), cidadao));
+		cidadao.setEscolaridade(dados.escolaridade());
+		cidadao.setSituacaoEscolar(dados.situacaoEscolar());
+
+		Cidadao atualizaCidadao = repository.save(cid.get());
+
+		return atualizaCidadao;
 	}
 
-	public String deletarCidadao(Long id) {
+	public void deletarCidadao(Long id) {
 
-		repository.deleteById(id);
-		return """
-				O cidadao de ID: %d
-				Foi deletado com sucesso.
-				""".formatted(id);
+		Cidadao cidadao = repository.findById(id).orElseThrow(BadRequestExceptionHandler::new);
+
+		repository.deleteById(cidadao.getId());
 	}
 
-	public Cidadao verificaExistencia(Long id) {
-		Optional<Cidadao> cidadao = repository.findById(id);
-		return cidadao.orElseThrow(BadRequestExceptionHandler::new);
-
-	}
 }

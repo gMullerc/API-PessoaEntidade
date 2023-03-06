@@ -18,5 +18,5 @@ public record DadosCadastroPessoa(
 		@NotNull enumEtnia etnia,
 		@NotNull LocalDate dataDeNascimento, 
 		@NotNull @Valid List<DadosEndereco> endereco,
-		@NotNull @Valid DadosContato contato) {
+		@NotNull @Valid List<DadosContato> contato) {
 }

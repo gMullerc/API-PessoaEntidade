@@ -7,7 +7,7 @@ import br.com.magnasistemas.api.model.Contato;
 import br.com.magnasistemas.api.model.Endereco;
 import br.com.magnasistemas.api.model.Pessoa;
 
-public record DadosListagemPessoa(Long id, String nome, enumGenero genero, List<Endereco> endereco, Contato contato ) {
+public record DadosListagemPessoa(Long id, String nome, enumGenero genero, List<Endereco> endereco, List<Contato> contato ) {
 
     public DadosListagemPessoa(Pessoa pessoa){
         this(pessoa.getId(), pessoa.getNome(), pessoa.getGenero(), pessoa.getEndereco(), pessoa.getContato());

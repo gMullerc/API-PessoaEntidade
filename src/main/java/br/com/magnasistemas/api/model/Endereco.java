@@ -13,10 +13,12 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Table(name = "enderecos")
 @Entity(name = "Endereco")
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Endereco {

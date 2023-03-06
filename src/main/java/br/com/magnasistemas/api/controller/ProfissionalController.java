@@ -43,7 +43,7 @@ public class ProfissionalController {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Profissional> procurarPorId(@PathVariable Long id) {
+	public ResponseEntity<DadosListagemProfissional> procurarPorId(@PathVariable Long id) {
 		return ResponseEntity.status(HttpStatus.OK).body(service.listarPorID(id));
 	}
 
@@ -57,7 +57,8 @@ public class ProfissionalController {
 	@DeleteMapping("/{id}")
 	@Transactional
 	public ResponseEntity<String> deletar(@PathVariable Long id) {
-		Profissional profissional = service.verificaExistencia(id);
-		return ResponseEntity.status(HttpStatus.NO_CONTENT).body(service.deletarProfissional(profissional.getId()));
+		service.deletarProfissional(id);
+		
+		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 	}
 }

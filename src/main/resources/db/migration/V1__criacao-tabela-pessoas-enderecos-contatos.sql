@@ -1,11 +1,3 @@
-CREATE TABLE IF NOT EXISTS contatos(
-
-	contatos_id SERIAL primary key,
-	celular varchar(255) UNIQUE NULL,
-	email varchar(255) UNIQUE NULL,
-	telefone varchar(255) UNIQUE NULL);
-	
-	
 CREATE TABLE IF NOT EXISTS pessoas(
 	id SERIAL primary key,
 	data_de_nascimento date NOT NULL,
@@ -13,10 +5,22 @@ CREATE TABLE IF NOT EXISTS pessoas(
 	genero varchar(255) NULL,
 	nome varchar(255) NULL,
 	contatos_id int NULL,
-	enderecos_id int NULL ,
-   CONSTRAINT fk_contatos
-      FOREIGN KEY(contatos_id) 
-	  REFERENCES contatos(contatos_id));
+	enderecos_id int NULL
+	);
+
+	  
+	  
+CREATE TABLE IF NOT EXISTS contatos(
+
+	contatos_id SERIAL primary key,
+	celular varchar(255) UNIQUE NULL,
+	email varchar(255) UNIQUE NULL,
+	telefone varchar(255) UNIQUE NULL,
+	pessoa_id int NULL,
+	
+	CONSTRAINT fk_pessoas
+      FOREIGN KEY(pessoa_id) 
+	  REFERENCES pessoas(id));
 	  
 CREATE TABLE IF NOT EXISTS enderecos(
 
@@ -39,9 +43,6 @@ CREATE TABLE IF NOT EXISTS enderecos(
 ALTER TABLE pessoas
     ADD CONSTRAINT fk_enderecos FOREIGN KEY (enderecos_id) REFERENCES enderecos (enderecos_id);
 
-
-	 
-
-	  
-	  
+ALTER TABLE pessoas
+    ADD CONSTRAINT fk_contatos FOREIGN KEY (contatos_id) REFERENCES contatos (contatos_id);
 	  

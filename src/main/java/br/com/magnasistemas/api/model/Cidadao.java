@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import br.com.magnasistemas.api.enumerator.enumEscolaridade;
 import br.com.magnasistemas.api.enumerator.enumSituacaoEscolar;
-import br.com.magnasistemas.api.records.cidadao.DadosAtualizacaoCidadao;
 import br.com.magnasistemas.api.records.cidadao.DadosCadastroCidadao;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -20,11 +19,13 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "cidadaos")
 @Inheritance(strategy = InheritanceType.JOINED)
 @Getter
+@Setter
 @NoArgsConstructor
 @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class Cidadao extends Pessoa {
@@ -52,9 +53,8 @@ public class Cidadao extends Pessoa {
 
 	}
 
-	public void atualizarDadosCidadao(DadosAtualizacaoCidadao dados) {
-		atualizarInformacoes(dados.pessoa());
-		this.situacaoEscolar = dados.situacaoEscolar();
-		this.escolaridade = dados.escolaridade();
-	}
+
+
+		
+	
 }

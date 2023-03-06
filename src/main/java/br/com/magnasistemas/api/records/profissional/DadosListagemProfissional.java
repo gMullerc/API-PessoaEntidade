@@ -14,7 +14,7 @@ import br.com.magnasistemas.api.model.Endereco;
 import br.com.magnasistemas.api.model.Profissional;
 
 public record DadosListagemProfissional(Long id, String nome, enumGenero genero, List<Endereco> endereco,
-		Contato contato, enumSituacaoEscolar situacaoEscolar, enumEscolaridade Escolaridade, Documento documentos,
+		List<Contato> contato, enumSituacaoEscolar situacaoEscolar, enumEscolaridade Escolaridade, Documento documentos,
 		String cargo, enumTipoDeProfissional TipoDeprofissional, BigDecimal remuneracao,
 		DocumentosProfissionais documentosProfissionais) {
 

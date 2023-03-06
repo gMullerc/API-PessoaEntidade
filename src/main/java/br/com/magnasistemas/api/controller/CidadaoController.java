@@ -1,10 +1,11 @@
 package br.com.magnasistemas.api.controller;
 
 import java.util.List;
-import java.util.Optional;
 
+import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.RequestEntity.BodyBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -43,7 +44,7 @@ public class CidadaoController {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Cidadao> procurarPorId(@PathVariable Long id) {
+	public ResponseEntity<DadosListagemCidadao> procurarPorId(@PathVariable Long id) {
 		return ResponseEntity.status(HttpStatus.OK).body(service.listarPorID(id));
 	}
 
@@ -57,9 +58,10 @@ public class CidadaoController {
 
 	@DeleteMapping("/{id}")
 	@Transactional
-	public ResponseEntity<String> deletar(@PathVariable Long id) {
-		Cidadao cid = service.verificaExistencia(id);
-		return ResponseEntity.status(HttpStatus.NO_CONTENT).body(service.deletarCidadao(cid.getId()));
+	public ResponseEntity<HttpStatus> deletar(@PathVariable Long id) {
+		service.deletarCidadao(id);
+		
+		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 	}
 
 }
