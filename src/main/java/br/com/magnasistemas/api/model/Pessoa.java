@@ -8,9 +8,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import br.com.magnasistemas.api.enumerator.enumEtnia;
 import br.com.magnasistemas.api.enumerator.enumGenero;
-import br.com.magnasistemas.api.records.contato.DadosContato;
-import br.com.magnasistemas.api.records.endereco.DadosEndereco;
-import br.com.magnasistemas.api.records.pessoa.DadosCadastroPessoa;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -23,19 +20,12 @@ import jakarta.persistence.InheritanceType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Table(name = "pessoas")
 @Entity(name = "Pessoa")
 @Inheritance(strategy = InheritanceType.JOINED)
-@Getter
-@Setter
-@NoArgsConstructor
-@EqualsAndHashCode(of = "id")
 public class Pessoa {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected Long id;
@@ -55,17 +45,61 @@ public class Pessoa {
 	@JsonIgnore
 	protected List<Contato> contato = new ArrayList<>();
 
-	public Pessoa(DadosCadastroPessoa dados) {
-		this.nome = dados.nome();
-		this.genero = dados.genero();
-		this.etnia = dados.etnia();
-		this.dataDeNascimento = dados.dataDeNascimento();
-		for (DadosEndereco endereco : dados.endereco()) {
-			this.endereco.add(new Endereco(endereco));
-		}
-		for (DadosContato contato : dados.contato()) {
-			this.contato.add(new Contato(contato));
-		}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public LocalDate getDataDeNascimento() {
+		return dataDeNascimento;
+	}
+
+	public void setDataDeNascimento(LocalDate dataDeNascimento) {
+		this.dataDeNascimento = dataDeNascimento;
+	}
+
+	public enumEtnia getEtnia() {
+		return etnia;
+	}
+
+	public void setEtnia(enumEtnia etnia) {
+		this.etnia = etnia;
+	}
+
+	public enumGenero getGenero() {
+		return genero;
+	}
+
+	public void setGenero(enumGenero genero) {
+		this.genero = genero;
+	}
+
+	public List<Endereco> getEndereco() {
+		return endereco;
+	}
+
+	public void setEndereco(List<Endereco> endereco) {
+		this.endereco = endereco;
+	}
+
+	public List<Contato> getContato() {
+		return contato;
+	}
+
+	public void setContato(List<Contato> contato) {
+		this.contato.addAll(contato);
 	}
 
 }

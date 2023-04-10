@@ -25,9 +25,23 @@ public class CidadaoService {
 	@Autowired
 	private ContatoService contatos;
 
-	public Cidadao criarCidadao(DadosCadastroCidadao cid) {
+	@Autowired
+	private DocumentosService documento;
 
-		return repository.save(new Cidadao(cid));
+	public Cidadao criarCidadao(DadosCadastroCidadao dados) {
+
+		Cidadao cidadao = new Cidadao();
+		cidadao.setNome(dados.pessoa().nome());
+		cidadao.setDataDeNascimento(dados.pessoa().dataDeNascimento());
+		cidadao.setEtnia(dados.pessoa().etnia());
+		cidadao.setGenero(dados.pessoa().genero()); 
+		cidadao.setEndereco(enderecos.criarEndereco(dados.pessoa().endereco()));
+		cidadao.setContato(contatos.criarContato(dados.pessoa().contato()));
+		cidadao.setDocumentos(documento.criarDocumento(dados.documentos()));
+		cidadao.setEscolaridade(dados.escolaridade());
+		cidadao.setSituacaoEscolar(dados.situacaoEscolar());
+
+		return repository.save(cidadao);
 	}
 
 	public List<DadosListagemCidadao> listarCidadao() {
@@ -39,10 +53,9 @@ public class CidadaoService {
 
 	public DadosListagemCidadao listarPorID(Long id) {
 		Optional<DadosListagemCidadao> get = repository.findById(id).map(DadosListagemCidadao::new);
-		
+
 		return get.orElseThrow(BadRequestExceptionHandler::new);
-		
-		
+
 	}
 
 	public Cidadao atualizarCidadao(DadosAtualizacaoCidadao dados) {
@@ -57,9 +70,7 @@ public class CidadaoService {
 		cidadao.setEscolaridade(dados.escolaridade());
 		cidadao.setSituacaoEscolar(dados.situacaoEscolar());
 
-		Cidadao atualizaCidadao = repository.save(cid.get());
-
-		return atualizaCidadao;
+		return repository.save(cid.get());
 	}
 
 	public void deletarCidadao(Long id) {

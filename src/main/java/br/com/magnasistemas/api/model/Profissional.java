@@ -3,7 +3,6 @@ package br.com.magnasistemas.api.model;
 import java.math.BigDecimal;
 
 import br.com.magnasistemas.api.enumerator.enumTipoDeProfissional;
-import br.com.magnasistemas.api.records.profissional.DadosCadastroProfissional;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -14,16 +13,14 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
 @Table(name = "profissionais")
-@Getter
-@Setter
-@NoArgsConstructor
 public class Profissional extends Cidadao {
+
+	public Profissional() {
+		super();
+	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,13 +33,45 @@ public class Profissional extends Cidadao {
 	protected DocumentosProfissionais documentosProfissionais;
 	protected BigDecimal remuneracao;
 
-	public Profissional(DadosCadastroProfissional dados) {
-		super(dados.cidadao());
-		this.cargo = dados.cargo();
-		this.tipoDeProfissional = dados.tipoDeProfissional();
-		this.remuneracao = dados.remuneracao();
-		this.documentosProfissionais = new DocumentosProfissionais(dados.documentosProfissionais());
+	@Override
+	public Long getId() {
+		return id;
+	}
+	@Override
+	public void setId(Long id) {
+		this.id = id;
+	}
 
+	public String getCargo() {
+		return cargo;
+	}
+
+	public void setCargo(String cargo) {
+		this.cargo = cargo;
+	}
+
+	public enumTipoDeProfissional getTipoDeProfissional() {
+		return tipoDeProfissional;
+	}
+
+	public void setTipoDeProfissional(enumTipoDeProfissional tipoDeProfissional) {
+		this.tipoDeProfissional = tipoDeProfissional;
+	}
+
+	public DocumentosProfissionais getDocumentosProfissionais() {
+		return documentosProfissionais;
+	}
+
+	public void setDocumentosProfissionais(DocumentosProfissionais documentosProfissionais) {
+		this.documentosProfissionais = documentosProfissionais;
+	}
+
+	public BigDecimal getRemuneracao() {
+		return remuneracao;
+	}
+
+	public void setRemuneracao(BigDecimal remuneracao) {
+		this.remuneracao = remuneracao;
 	}
 
 }

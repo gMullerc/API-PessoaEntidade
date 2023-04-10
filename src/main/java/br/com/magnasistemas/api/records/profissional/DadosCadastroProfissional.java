@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 import br.com.magnasistemas.api.enumerator.enumTipoDeProfissional;
 import br.com.magnasistemas.api.records.cidadao.DadosCadastroCidadao;
-import br.com.magnasistemas.api.records.documentosProfissionais.DadosDocumentosProfissionais;
+import br.com.magnasistemas.api.records.documentos_profissionais.DadosDocumentosProfissionais;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

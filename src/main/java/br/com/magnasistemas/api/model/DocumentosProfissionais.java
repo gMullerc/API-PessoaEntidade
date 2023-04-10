@@ -1,19 +1,14 @@
 package br.com.magnasistemas.api.model;
 
-import br.com.magnasistemas.api.records.documentosProfissionais.DadosDocumentosProfissionais;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Entity(name = "DocumentosProfissionais")
 @Table(name = "documentos_profissionais")
-@Getter
-@NoArgsConstructor
 public class DocumentosProfissionais {
 
 	@Id
@@ -24,9 +19,31 @@ public class DocumentosProfissionais {
 	@Column(unique = true)
 	private String carteiraDeTrabalho;
 
-	public DocumentosProfissionais(DadosDocumentosProfissionais dados) {
-		this.pis = dados.pis();
-		this.carteiraDeTrabalho = dados.carteiraDeTrabalho();
+
+	public DocumentosProfissionais() {
 	}
 
+	public void setDocumentos_profissionais_id(Long documentos_profissionais_id) {
+		this.documentos_profissionais_id = documentos_profissionais_id;
+	}
+
+	public void setPis(String pis) {
+		this.pis = pis;
+	}
+
+	public void setCarteiraDeTrabalho(String carteiraDeTrabalho) {
+		this.carteiraDeTrabalho = carteiraDeTrabalho;
+	}
+
+	public Long getDocumentos_profissionais_id() {
+		return documentos_profissionais_id;
+	}
+
+	public String getPis() {
+		return pis;
+	}
+
+	public String getCarteiraDeTrabalho() {
+		return carteiraDeTrabalho;
+	}
 }

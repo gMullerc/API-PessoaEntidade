@@ -1,5 +1,6 @@
 package br.com.magnasistemas.api.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import br.com.magnasistemas.api.exception.NotFoundExceptionHandler;
 import br.com.magnasistemas.api.model.Endereco;
 import br.com.magnasistemas.api.model.Pessoa;
 import br.com.magnasistemas.api.records.endereco.DadosAtualizaEndereco;
+import br.com.magnasistemas.api.records.endereco.DadosEndereco;
 import br.com.magnasistemas.api.records.pessoa.DadosAtualizacaoPessoa;
 import br.com.magnasistemas.api.repository.EnderecoRepository;
 
@@ -18,6 +20,30 @@ public class EnderecoService {
 	@Autowired
 	private EnderecoRepository repo;
 
+	
+	public List<Endereco> criarEndereco(List<DadosEndereco> dadosEndereco) {
+		List<Endereco> end = new ArrayList<>();
+		for (DadosEndereco dadosEnderecos : dadosEndereco) {
+			Endereco endereco = new Endereco();
+			
+			endereco.setLogradouro(dadosEnderecos.logradouro());
+			endereco.setBairro(dadosEnderecos.bairro());
+			endereco.setCep(dadosEnderecos.cep());
+			endereco.setCidade(dadosEnderecos.cidade());
+			
+			endereco.setComplemento(dadosEnderecos.complemento());
+			endereco.setNumero(dadosEnderecos.numero());
+			endereco.setUf(dadosEnderecos.uf());
+			
+			
+			
+			end.add(endereco);
+		}
+		
+		return end;
+	
+	}
+	
 	public List<Endereco> atualizarEndereco(DadosAtualizacaoPessoa dados, Pessoa pessoa) {
 
 		List<Endereco> end = pessoa.getEndereco();

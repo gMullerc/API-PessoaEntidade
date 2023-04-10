@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.magnasistemas.api.model.Cidadao;
 import br.com.magnasistemas.api.model.Profissional;
 import br.com.magnasistemas.api.records.profissional.DadosAtualizacaoProfissional;
 import br.com.magnasistemas.api.records.profissional.DadosCadastroProfissional;

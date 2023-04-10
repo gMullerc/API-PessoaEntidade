@@ -1,4 +1,4 @@
-package br.com.magnasistemas.api.records.documentosProfissionais;
+package br.com.magnasistemas.api.records.documentos_profissionais;
 
 import jakarta.validation.constraints.NotBlank;
 

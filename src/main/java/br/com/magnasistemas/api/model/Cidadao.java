@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import br.com.magnasistemas.api.enumerator.enumEscolaridade;
 import br.com.magnasistemas.api.enumerator.enumSituacaoEscolar;
-import br.com.magnasistemas.api.records.cidadao.DadosCadastroCidadao;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -17,18 +16,27 @@ import jakarta.persistence.InheritanceType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
 @Table(name = "cidadaos")
 @Inheritance(strategy = InheritanceType.JOINED)
-@Getter
-@Setter
-@NoArgsConstructor
 @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class Cidadao extends Pessoa {
+
+	public Cidadao() {
+		super();
+	}
+	
+	@Override
+	public Long getId() {
+		return id;
+	}
+
+	@Override
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,17 +52,30 @@ public class Cidadao extends Pessoa {
 	@JoinColumn(name = "documentos_id")
 	protected Documento documentos;
 
-	public Cidadao(DadosCadastroCidadao dados) {
 
-		super(dados.pessoa());
-		this.situacaoEscolar = dados.situacaoEscolar();
-		this.escolaridade = dados.escolaridade();
-		this.documentos = new Documento(dados.documentos());
 
+	public enumSituacaoEscolar getSituacaoEscolar() {
+		return situacaoEscolar;
 	}
 
+	public void setSituacaoEscolar(enumSituacaoEscolar situacaoEscolar) {
+		this.situacaoEscolar = situacaoEscolar;
+	}
 
+	public enumEscolaridade getEscolaridade() {
+		return escolaridade;
+	}
 
-		
-	
+	public void setEscolaridade(enumEscolaridade escolaridade) {
+		this.escolaridade = escolaridade;
+	}
+
+	public Documento getDocumentos() {
+		return documentos;
+	}
+
+	public void setDocumentos(Documento documentos) {
+		this.documentos = documentos;
+	}
+
 }
